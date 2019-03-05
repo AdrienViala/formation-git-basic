@@ -126,248 +126,13 @@
                 </section>
                 <section data-markdown>
                     # Sommaire
-                    * Sous le capot
                     * Les concepts de Git
                     * Les fonctions de bases
                     * Travailler concrètement avec Git
                     * Les workflows
-                    *
                 </section>
                 <!-- Points à montrer dans cette formation : 
                  - cherry-pick -->
-            </section>
-
-            <section>
-                <section>
-                    <h2>Sous le capot</h2>
-                    <p class="semantic-sample" style="text-align: left;">
-                        Git a été pensé comme un système de fichier à part entière sur lequel a été construit une
-                        solution de gestion de version.
-                    </p>
-                    <img src="./images/git_storing.png" style="height:300px;" />
-                    <div style="display:flex; align-items:center; justify-content: space-around;">
-                        <p class="semantic-sample" style="text-align: left;">
-                            Git entrepose des snapshots successifs de vos fichiers.
-                        </p>
-                    </div>
-                </section>
-                <section>
-                    <h2>Autres VCSs</h2>
-                    <p class="semantic-sample" style="text-align: left;">
-                        CVS, Subversion, Perforce, Bazaar entrepose une suite de différences sur les fichiers
-                    </p>
-                    <img src="./images/subversion_storing.png" style="height:300px;" />
-                </section>
-                <section>
-                    <h2>Géographie de Git</h2>
-                    <p class="semantic-sample" style="text-align: left;">
-                        <p>Le <b>working directory</b> ou <b>workspace</b> est le répertoire du projet</p>
-                        <p>Le dossier <b>.git</b> dit Git directory est là où tout se passe !</p>
-                    </p>
-                    <img src="./images/inside_git.png" style="height:300px;" />
-                </section>
-                <section>
-                    <h2>Le contenu de .git</h2>
-                    <ul class="semantic-sample">
-                        <li>description : pour GitWeb (ancêtre des web interface)
-                        </li>
-                        <li>branches/ : old git (before 2009)
-                        </li>
-                        <li>config : fichier de configuration au niveau du projet
-                        </li>
-                        <li>info : .gitignore au niveau global
-                        </li>
-                        <li><b>objects/</b> : l'ensemble des snapshots (les versions)
-                        </li>
-                        <li><b>refs/</b> : les pointeurs vers les commits actuels : contient <b>heads</b>, <b>remote</b>
-                            et <b>tags</b>.</li>
-                        <li><b>HEAD</b> : pointeur vers la branche actuellement checked out
-                        </li>
-                        <li><b>index</b> : la fameuse staging area !
-                        </li>
-                        <li>hooks : pour les hooks (scripts appelés par les commandes Git)
-                        </li>
-                    </ul>
-                </section>
-
-                <section>
-                    <h2>objects/</h2>
-                    <p class="semantic-sample" style="text-align: center;">
-                        <p>Il n'y a que 4 objets pour faire fonctionner Git</p>
-                        <ul class="semantic-sample">
-                            <li><b>Object</b> = zlib(Header + Content)
-                            </li>
-                            <li><b>Header</b> = ObjectType + \\u0020 + ContentBytesSize + \\u0000
-                            </li>
-                            <li><b>SHA1</b></b> = SHA1(Header + Content)
-                            </li>
-                        </ul>
-                    </p>
-                    <ul class="semantic-sample">
-                        <li><b>blob</b> : contient la donnée compressée avec zlib
-                        </li>
-                        <li><b>tree</b> : contient 1 sub-tree et/ou des blobs
-                        </li>
-                        <li><b>commit</b> : contient des metadata, un tree et les commits précédents
-                        </li>
-                        <li><b>tag</b> annoté : contient des metadata et un objet Git
-                        </li>
-                    </ul>
-                </section>
-
-                <section>
-                    <h2>objects/</h2>
-                    <img src="./images/data-model-3.png" style="height:520px;" />
-                </section>
-
-                <section>
-                    <h2>refs/</h2>
-                    <img src="./images/refs_content.PNG" style="height:150px;" />
-                    <h2>refs/heads/</h2>
-                    <img src="./images/refs_master_content.PNG" style="height:150px;" />
-                </section>
-
-                <section>
-                    <h2>refs/heads/master</h2>
-                    <img src="./images/refs_heads_master_content.PNG" style="height:400px;" />
-                </section>
-
-                <section>
-                    <h2>Refs & Tags</h2>
-                    <p class="semantic-sample" style="text-align: left;">
-                        <p>Un <b>tag léger</b> est simplement une référence</p>
-                        <pre><code class="bash">git update-ref refs/tags/v2.0 sha1</code>Crée un tag léger, i.e. juste une référence</pre>
-                        <pre><code class="bash">git tag v2.0</code>Fait la même chose (attention pas de handle)</pre>
-                        <p>Un <b>tag annoté</b> est un objet Git qui pointe vers un SHA1 et qui est référencé dans
-                            /refs/tags/</p>
-                        <pre><code class="bash">git tag -a v2.0 sha1 -m 'formation-git-basic finie'</code>Seule méthode de créer le tag annoté</pre>
-                    </p>
-                </section>
-
-                <section>
-                    <h2>Refs & Tags</h2>
-                    <p class="semantic-sample" style="text-align: left;">
-                        <p>N'importe quel objet Git qui a un SHA1 peut être taggé</p>
-                        <p>Faites des tags annotés, pas des références</p>
-                        <p>Les tags ne sont pas automatiquement pushés : </p>
-                        <pre><code class="bash">git push origin v2.0</code>Aussi possible :  --tags pour tous le tags</pre>
-                        <pre><code class="bash">git push origin v2.0</code>Aussi possible :  --tags pour tous le tags</pre>
-                        <pre><code class="bash">git tag -d v2.0</code>Efface le tag local</pre>
-                        <pre><code class="bash">git push origin --delete v2.0</code>Efface le tag sur le remote</pre>
-
-                    </p>
-                </section>
-
-                <section>
-                    <h2>Refs & Branches</h2>
-                    <p class="semantic-sample" style="text-align: left;">
-                        <p>Une branche est une référence ! </p>
-                        <pre><code class="bash">git update-ref refs/heads/test_formation SHA1_Commit</code>On va créer une branche juste avec cette commande</pre>
-                        <pre><code class="bash">echo SHA1_Commit > .git/refs/heads/test_formation</code>Fait la même chose (mais c'est mieux de ne pas toucher directement le fichier)</pre>
-                        <pre><code class="bash">git log --pretty=oneline test_formation</code>on voit la branche nouvellement créée</pre>
-                    </p>
-                </section>
-
-                <section>
-                    <h2>HEAD</h2>
-                    <p class="semantic-sample" style="text-align: left;">
-                        <p>C'est un pointeur vers un pointeur</p>
-                        <p><code class="txt">ref: refs/heads/git++</code></p>
-                    </p>
-                </section>
-
-                <section>
-                    <h2>Pack files</h2>
-                    <h4>performance & compression</h4>
-                    <p class=" semantic-sample" style="text-align: left;">
-                        <p>De temps en temps, Git <b>packs</b> les git objects</p>
-                        <ul class="semantic-sample">
-                            <li>.git/objects/pack/pack-SHA1.pack
-                            </li>
-                            <li>.git/objects/pack/pack-SHA1.idx
-                            </li>
-                        </ul>
-                        <p>Dans l'index, Git se souvient de la structure</p>
-                        <p>Dans le pack, Git stocke des blobs et des <b>deltas</b></p>
-                        <pre><code class="bash">git gc</code>Exécute le Garbage Collector</pre>
-                        <pre><code class="bash">git verify-pack -v .git/objects/pack/pack-Sha1.idx</code>Affiche la structure du pack</pre>
-                    </p>
-                </section>
-
-            </section>
-
-
-            <section>
-                <section>
-                    <h2>Git hooks</h2>
-                    <img src="./images/giphy/hook.gif" style="height:500px;" />
-                </section>
-                <section>
-                    <h2>Git hooks</h2>
-                    <p class="semantic-sample" style="text-align: left;">
-                        <p>Built-in, Git exécute des scripts pre & post command</p>
-                        <p>Ces scripts sont modifiables à volonté.</p>
-                        <p>Quelconque language : shell, python, ruby, perl...</p>
-                        <ul>
-                            <li>build </li>
-                            <li>déploiement </li>
-                            <li>vérification </li>
-                        </ul>
-                </section>
-
-                <section>
-                    <h2>Git client-side hooks</h2>
-                    <img src="./images/client_side_hooks.PNG" style="height:550px;" />
-                </section>
-
-                <section>
-                    <h2>Git client-side hooks</h2>
-                    <p class="semantic-sample" style="text-align: left;">
-                        <p>Mais les hooks peuvent faire beaucoup plus : </p>
-                        <ul class="semantic-sample">
-                            <li>Faire passe un <b>linter</b> sur le code commité</li>
-                            <li>Forcer la présence d'un ticket Jira, TFS ou autre dans le commit</li>
-                            <li>Vérifier que le message de commit décrit quelque chose (et pas juste "bug fix")</li>
-                            <li>Lancer la suite de tests automatiques</b></li>
-                            <li>Prendre en photo le commiter avec lolcommits :)</li>
-                        </ul>
-                    </p>
-                    <img src="./images/lolcommits.jpeg" style="height:200px;" />
-                </section>
-
-                <section>
-                    <h2>Git hooks</h2>
-                    <p class="semantic-sample" style="text-align: left;">
-                        <p>Tous les outils existent déjà pour exploiter au maximum les Git Hooks : </p>
-                        <p>Google est notre ami.</p>
-                        <a href="https://github.com/aitemr/awesome-git-hooks" target="_blank">Un repo de liens, de
-                            documentation et d'exemples pour démarrer</a>
-                    </p>
-                </section>
-
-                <section>
-                    <h2>Git server-side hooks</h2>
-                    <p class="semantic-sample" style="text-align: left;">
-                        <p>Les hooks peuvent être utilisés côté serveur : pre-receive, post-receive, and update</p>
-                        <p>Ils peuvent <b>rejeter les push</b> inéadéquats.</p>
-                        <p>Ils sont différents des outils de Continuous Integration & Continuous
-                            Deployement offert par
-                            les plateformes construites autour de Git, comme Gitlab, Bitbucket, Github...</p>
-                    </p>
-                </section>
-
-                <section>
-                    <h2> != Webhooks</h2>
-                    <p class="semantic-sample" style="text-align: left;">
-                        <p>Fournis par les plateformes</p>
-                        <p>Callback HTTP construit par l'administrateur</p>
-                        <ul class="semantic-sample">
-                            <li>Notification Slack quand un build échoue, quand un build est déployé</li>
-                            <li>Mail envoyé à chaque étape du cycle de vie d'un ticket (classique)</li>
-                            <li>Labéliser les merge requests</li>
-                        </ul>
-                    </p>
-                </section>
             </section>
 
             <section>
@@ -964,6 +729,9 @@ node_modules/
                             en main</a></p>
                     <p class="semantic-sample"><a href="https://learngitbranching.js.org/" target="_blank">Branching</a>
                     </p>
+                    <p class="semantic-sample"><a href="https://github.com/praqma-training/git-katas"
+                            target="_blank">Git Katas pour aller plus loin</a>
+                    </p>
                 </section>
             </section>
             <!-- Workflow -->
@@ -1317,6 +1085,273 @@ node_modules/
                     <li class="semantic-sample">Projet à multiples parties prenantes</li>
                 </section>
             </section>
+
+            <!-- Sommaire Git ++ -->
+            <section data-markdown>
+                # Sommaire Git ++
+                * Git inner workings
+                * Git hooks
+                * Revert, Reset, Checkout
+                * Les workflows
+            </section>
+
+            <!-- Git Sous le capot -->
+            <section>
+                <section>
+                    <h2>Sous le capot</h2>
+                    <p class="semantic-sample" style="text-align: left;">
+                        Git a été pensé comme un système de fichier à part entière sur lequel a été construit une
+                        solution de gestion de version.
+                    </p>
+                    <img src="./images/git_storing.png" style="height:300px;" />
+                    <div style="display:flex; align-items:center; justify-content: space-around;">
+                        <p class="semantic-sample" style="text-align: left;">
+                            Git entrepose des snapshots successifs de vos fichiers.
+                        </p>
+                    </div>
+                </section>
+                <section>
+                    <h2>Autres VCSs</h2>
+                    <p class="semantic-sample" style="text-align: left;">
+                        CVS, Subversion, Perforce, Bazaar entrepose une suite de différences sur les fichiers
+                    </p>
+                    <img src="./images/subversion_storing.png" style="height:300px;" />
+                </section>
+                <section>
+                    <h2>Géographie de Git</h2>
+                    <p class="semantic-sample" style="text-align: left;">
+                        <p>Le <b>working directory</b> ou <b>workspace</b> est le répertoire du projet</p>
+                        <p>Le dossier <b>.git</b> dit Git directory est là où tout se passe !</p>
+                    </p>
+                    <img src="./images/inside_git.png" style="height:300px;" />
+                </section>
+                <section>
+                    <h2>Le contenu de .git</h2>
+                    <ul class="semantic-sample">
+                        <li>description : pour GitWeb (ancêtre des web interface)
+                        </li>
+                        <li>branches/ : old git (before 2009)
+                        </li>
+                        <li>config : fichier de configuration au niveau du projet
+                        </li>
+                        <li>info : .gitignore au niveau global
+                        </li>
+                        <li><b>objects/</b> : l'ensemble des snapshots (les versions)
+                        </li>
+                        <li><b>refs/</b> : les pointeurs vers les commits actuels : contient <b>heads</b>, <b>remote</b>
+                            et <b>tags</b>.</li>
+                        <li><b>HEAD</b> : pointeur vers la branche actuellement checked out
+                        </li>
+                        <li><b>index</b> : la fameuse staging area !
+                        </li>
+                        <li>hooks : pour les hooks (scripts appelés par les commandes Git)
+                        </li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>objects/</h2>
+                    <p class="semantic-sample" style="text-align: center;">
+                        <p>Il n'y a que 4 objets pour faire fonctionner Git</p>
+                        <ul class="semantic-sample">
+                            <li><b>Object</b> = zlib(Header + Content)
+                            </li>
+                            <li><b>Header</b> = ObjectType + \\u0020 + ContentBytesSize + \\u0000
+                            </li>
+                            <li><b>SHA1</b></b> = SHA1(Header + Content)
+                            </li>
+                        </ul>
+                    </p>
+                    <ul class="semantic-sample">
+                        <li><b>blob</b> : contient la donnée compressée avec zlib
+                        </li>
+                        <li><b>tree</b> : contient 1 sub-tree et/ou des blobs
+                        </li>
+                        <li><b>commit</b> : contient des metadata, un tree et les commits précédents
+                        </li>
+                        <li><b>tag</b> annoté : contient des metadata et un objet Git
+                        </li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>objects/</h2>
+                    <img src="./images/data-model-3.png" style="height:520px;" />
+                </section>
+
+                <section>
+                    <h2>refs/</h2>
+                    <img src="./images/refs_content.PNG" style="height:150px;" />
+                    <h2>refs/heads/</h2>
+                    <img src="./images/refs_master_content.PNG" style="height:150px;" />
+                </section>
+
+                <section>
+                    <h2>refs/heads/master</h2>
+                    <img src="./images/refs_heads_master_content.PNG" style="height:400px;" />
+                </section>
+
+                <section>
+                    <h2>Refs & Tags</h2>
+                    <p class="semantic-sample" style="text-align: left;">
+                        <p>Un <b>tag léger</b> est simplement une référence</p>
+                        <pre><code class="bash">git update-ref refs/tags/v2.0 sha1</code>Crée un tag léger, i.e. juste une référence</pre>
+                        <pre><code class="bash">git tag v2.0</code>Fait la même chose (attention pas de handle)</pre>
+                        <p>Un <b>tag annoté</b> est un objet Git qui pointe vers un SHA1 et qui est référencé dans
+                            /refs/tags/</p>
+                        <pre><code class="bash">git tag -a v2.0 sha1 -m 'formation-git-basic finie'</code>Seule méthode de créer le tag annoté</pre>
+                    </p>
+                </section>
+
+                <section>
+                    <h2>Refs & Tags</h2>
+                    <p class="semantic-sample" style="text-align: left;">
+                        <p>N'importe quel objet Git qui a un SHA1 peut être taggé</p>
+                        <p>Faites des tags annotés, pas des références</p>
+                        <p>Les tags ne sont pas automatiquement pushés : </p>
+                        <pre><code class="bash">git push origin v2.0</code>Aussi possible :  --tags pour tous le tags</pre>
+                        <pre><code class="bash">git push origin v2.0</code>Aussi possible :  --tags pour tous le tags</pre>
+                        <pre><code class="bash">git tag -d v2.0</code>Efface le tag local</pre>
+                        <pre><code class="bash">git push origin --delete v2.0</code>Efface le tag sur le remote</pre>
+
+                    </p>
+                </section>
+
+                <section>
+                    <h2>Refs & Branches</h2>
+                    <p class="semantic-sample" style="text-align: left;">
+                        <p>Une branche est une référence ! </p>
+                        <pre><code class="bash">git update-ref refs/heads/test_formation SHA1_Commit</code>On va créer une branche juste avec cette commande</pre>
+                        <pre><code class="bash">echo SHA1_Commit > .git/refs/heads/test_formation</code>Fait la même chose (mais c'est mieux de ne pas toucher directement le fichier)</pre>
+                        <pre><code class="bash">git log --pretty=oneline test_formation</code>on voit la branche nouvellement créée</pre>
+                    </p>
+                </section>
+
+                <section>
+                    <h2>index</h2>
+                    <p class="semantic-sample" style="text-align: left;">
+                        <p>Un unique fichier qui contient les changements qu'on veut commiter</p>
+                        <pre><code class="bash">git update-index</code>Ajoute du contenu dans le fichier index (depuis working area ou database)</pre>
+                        <pre><code class="bash">git write-tree</code>Organise l'ensemble des modifications de l'index en un commit qui pointe vers un tree, etc. </pre>
+                        <pre><code class="bash">git ls-files -s</code>Explore le fichier index</pre>
+
+                        <p>Git reprend beaucoup d'éléments de gestion de fichier de Unix mais simplifiés : seuls les 3
+                            modes suivants sont possibles pour les objets blob</p>
+                        <p>
+                            <ul class="semantic-sample">
+                                <li><b>100644</b> : fichier normal
+                                </li>
+                                <li><b>100755</b> : exécutable
+                                </li>
+                                <li><b>120000</b> : sym link
+                                </li>
+                            </ul>
+                        </p>
+                    </p>
+                </section>
+
+                <section>
+                    <h2>HEAD</h2>
+                    <p class="semantic-sample" style="text-align: left;">
+                        <p>C'est un pointeur vers un pointeur</p>
+                        <p><code class="txt">ref: refs/heads/git++</code></p>
+                    </p>
+                </section>
+
+                <section>
+                    <h2>Pack files</h2>
+                    <h4>performance & compression</h4>
+                    <p class=" semantic-sample" style="text-align: left;">
+                        <p>De temps en temps, Git <b>packs</b> les git objects</p>
+                        <ul class="semantic-sample">
+                            <li>.git/objects/pack/pack-SHA1.pack
+                            </li>
+                            <li>.git/objects/pack/pack-SHA1.idx
+                            </li>
+                        </ul>
+                        <p>Dans l'index, Git se souvient de la structure</p>
+                        <p>Dans le pack, Git stocke des blobs et des <b>deltas</b></p>
+                        <pre><code class="bash">git gc</code>Exécute le Garbage Collector</pre>
+                        <pre><code class="bash">git verify-pack -v .git/objects/pack/pack-Sha1.idx</code>Affiche la structure du pack</pre>
+                    </p>
+                </section>
+
+            </section>
+
+            <!-- Git hooks  -->
+            <section>
+                <section>
+                    <h2>Git hooks</h2>
+                    <img src="./images/giphy/hook.gif" style="height:500px;" />
+                </section>
+                <section>
+                    <h2>Git hooks</h2>
+                    <p class="semantic-sample" style="text-align: left;">
+                        <p>Built-in, Git exécute des scripts pre & post command</p>
+                        <p>Ces scripts sont modifiables à volonté.</p>
+                        <p>Quelconque language : shell, python, ruby, perl...</p>
+                        <ul>
+                            <li>build </li>
+                            <li>déploiement </li>
+                            <li>vérification </li>
+                        </ul>
+                </section>
+
+                <section>
+                    <h2>Git client-side hooks</h2>
+                    <img src="./images/client_side_hooks.PNG" style="height:550px;" />
+                </section>
+
+                <section>
+                    <h2>Git client-side hooks</h2>
+                    <p class="semantic-sample" style="text-align: left;">
+                        <p>Mais les hooks peuvent faire beaucoup plus : </p>
+                        <ul class="semantic-sample">
+                            <li>Faire passe un <b>linter</b> sur le code commité</li>
+                            <li>Forcer la présence d'un ticket Jira, TFS ou autre dans le commit</li>
+                            <li>Vérifier que le message de commit décrit quelque chose (et pas juste "bug fix")</li>
+                            <li>Lancer la suite de tests automatiques</b></li>
+                            <li>Prendre en photo le commiter avec lolcommits :)</li>
+                        </ul>
+                    </p>
+                    <img src="./images/lolcommits.jpeg" style="height:200px;" />
+                </section>
+
+                <section>
+                    <h2>Git hooks</h2>
+                    <p class="semantic-sample" style="text-align: left;">
+                        <p>Tous les outils existent déjà pour exploiter au maximum les Git Hooks : </p>
+                        <p>Google est notre ami.</p>
+                        <a href="https://github.com/aitemr/awesome-git-hooks" target="_blank">Un repo de liens, de
+                            documentation et d'exemples pour démarrer</a>
+                    </p>
+                </section>
+
+                <section>
+                    <h2>Git server-side hooks</h2>
+                    <p class="semantic-sample" style="text-align: left;">
+                        <p>Les hooks peuvent être utilisés côté serveur : pre-receive, post-receive, and update</p>
+                        <p>Ils peuvent <b>rejeter les push</b> inéadéquats.</p>
+                        <p>Ils sont différents des outils de Continuous Integration & Continuous
+                            Deployement offert par
+                            les plateformes construites autour de Git, comme Gitlab, Bitbucket, Github...</p>
+                    </p>
+                </section>
+
+                <section>
+                    <h2> != Webhooks</h2>
+                    <p class="semantic-sample" style="text-align: left;">
+                        <p>Fournis par les plateformes</p>
+                        <p>Callback HTTP construit par l'administrateur</p>
+                        <ul class="semantic-sample">
+                            <li>Notification Slack quand un build échoue, quand un build est déployé</li>
+                            <li>Mail envoyé à chaque étape du cycle de vie d'un ticket (classique)</li>
+                            <li>Labéliser les merge requests</li>
+                        </ul>
+                    </p>
+                </section>
+            </section>
+
 
         </div>
     </div>
