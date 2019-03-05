@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
 
-    <title>Git - Les bases</title>
+    <title>Git ++</title>
 
     <meta name="description" content="Formation destinée aux développeur pour une utilisation basique de Git">
     <meta name="author" content="Thibault INGARGIOLA">
@@ -12,7 +12,8 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
 
     <link rel="stylesheet" href="css/reveal.css">
     <link rel="stylesheet" href="css/theme/moon.css" id="theme">
@@ -118,14 +119,104 @@
             <section>
                 <section data-markdown>
                     # Git
-                    ### Les bases de la gestion de version
+                    ### vers l'infini et au-delà !
+                </section>
+                <section>
+                    <img src="./images/giphy/de_la_terre_a_la_lune.webp" style="height:500px;" />
                 </section>
                 <section data-markdown>
                     # Sommaire
+                    * Sous le capot
                     * Les concepts de Git
                     * Les fonctions de bases
                     * Travailler concrètement avec Git
                     * Les workflows
+                    *
+                </section>
+                <!-- Points à montrer dans cette formation : 
+                 - cherry-pick -->
+            </section>
+
+            <section>
+                <section>
+                    <h2>Sous le capot</h2>
+                    <p class="semantic-sample" style="text-align: left;">
+                        Git a été pensé comme un système de fichier à part entière sur lequel a été construit une
+                        solution de gestion de version.
+                    </p>
+                    <img src="./images/git_storing.png" style="height:300px;" />
+                    <div style="display:flex; align-items:center; justify-content: space-around;">
+                        <p class="semantic-sample" style="text-align: left;">
+                            Git entrepose des snapshots successifs de vos fichiers.
+                        </p>
+                    </div>
+                </section>
+                <section>
+                    <h2>Autres VCSs</h2>
+                    <p class="semantic-sample" style="text-align: left;">
+                        CVS, Subversion, Perforce, Bazaar entrepose une suite de différences sur les fichiers
+                    </p>
+                    <img src="./images/subversion_storing.png" style="height:300px;" />
+                </section>
+                <section>
+                    <h2>Géographie de Git</h2>
+                    <p class="semantic-sample" style="text-align: left;">
+                        <p>Le <b>working directory</b> ou <b>workspace</b> est le répertoire du projet</p>
+                        <p>Le dossier <b>.git</b> dit Git directory est là où tout se passe !</p>
+                    </p>
+                    <img src="./images/inside_git.png" style="height:300px;" />
+                </section>
+                <section>
+                    <h2>Le contenu de .git</h2>
+                    <ul class="semantic-sample">
+                        <li>description : pour GitWeb (ancêtre des web interface)
+                        </li>
+                        <li>branches/ : old git (before 2009) 
+                        </li>
+                        <li>config : fichier de configuration au niveau du projet
+                        </li>
+                        <li>info : .gitignore au niveau global 
+                        </li>
+                        <li>hooks : pour les hooks (scripts appelés par les commandes Git)
+                        </li>
+                        <li>HEAD : pointeur vers la branche actuellement checked out
+                        </li>
+                        <li>index : la fameuse staging area !
+                        </li>
+                        <li>objects/ : l'ensemble des snapshots (les versions)
+                        </li>
+                        <li>refs/ : les pointeurs vers les commits actuels : contient heads, remote et tags.
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Git hooks</h2>
+                    <p class="semantic-sample" style="text-align: left;">
+                        <p>Les hooks sont built-in dans Git.</p>
+                        <p>A des moments pré-déterminés, Git exécute des scripts</p>
+                        <p>Ces scripts sont modifiables à volonté.</p>
+                        <p>Le but premier est de fluidifier le processus de développement : build, déploiement, vérification, etc.</p>
+                        <p>Tous les outils existent déjà pour exploiter au maximum les Git Hooks : </p>
+                    </p>
+                    <ul class="semantic-sample">
+                        <li>description : pour GitWeb (ancêtre des web interface)
+                        </li>
+                        <li>branches/ : old git (before 2009) 
+                        </li>
+                        <li>config : fichier de configuration au niveau du projet
+                        </li>
+                        <li>info : .gitignore au niveau global 
+                        </li>
+                        <li>hooks : pour les hooks (scripts appelés par les commandes Git)
+                        </li>
+                        <li>HEAD : pointeur vers la branche actuellement checked out
+                        </li>
+                        <li>index : la fameuse staging area !
+                        </li>
+                        <li>objects/ : l'ensemble des snapshots (les versions)
+                        </li>
+                        <li>refs/ : les pointeurs vers les commits actuels : contient heads, remote et tags.
+                    </ul>
                 </section>
             </section>
 
@@ -176,7 +267,8 @@
                 </section>
             </section>
 
-            <section data-transition="slide" data-background="#4d7e65" data-background-transition="zoom" style="color:white; font-size:24px;">
+            <section data-transition="slide" data-background="#4d7e65" data-background-transition="zoom"
+                style="color:white; font-size:24px;">
                 <section>
                     <h1>La gestion de fichiers</h1>
                     <p class="semantic-sample">Git indexe les fichiers d'après leur <i>somme de contrôle</i> calculée
@@ -224,8 +316,8 @@ node_modules/
                 data-background-transition="zoom" style="color:black;">
                 <section>
                     <h1>L'historique</h1>
-                    <p>L'historique de git est créé comme une chaîne de pointeurs entre les différentes révisions (<strong
-                            style="color:red">commits</strong>) du projet</p>
+                    <p>L'historique de git est créé comme une chaîne de pointeurs entre les différentes révisions
+                        (<strong style="color:red">commits</strong>) du projet</p>
                 </section>
                 <section>
                     <h1>Le Commit</h1>
@@ -420,7 +512,8 @@ node_modules/
                 </section>
                 <section>
                     <h1>Git reset</h1>
-                    <p class="semantic-sample">Vous permez de <i>revenir à l'état de n'importe quel commit</i>. <i>Efface
+                    <p class="semantic-sample">Vous permez de <i>revenir à l'état de n'importe quel commit</i>.
+                        <i>Efface
                             les liens</i> des commits concernés.</p>
                     <pre><code class="bash">git reset HEAD^</code>Revient au commit précédent. En gardant l'ensemble des modifications dans l'état <i>modified</i></pre>
                     <pre><code class="bash">git reset HEAD~3 --hard</code>Revient trois commits en arrière en effaçant l'ensemble des modifications.</pre>
@@ -450,14 +543,16 @@ node_modules/
                 data-background-transition="zoom">
                 <section>
                     <h1>Les Branches</h1>
-                    <p class="semantic-sample">Il s'agit de <strong style="color: orange">la grande puissance de Git!</strong>
+                    <p class="semantic-sample">Il s'agit de <strong style="color: orange">la grande puissance de
+                            Git!</strong>
                         Rendre les branches plus facile d'utilisation pour s'adapter à n'importe quelle méthode de
                         travail.</p>
                 </section>
                 <section>
                     <h1>Git branch</h1>
-                    <p class="semantic-sample">Pour Git, une <strong style="color: orange">branche</strong> n'est qu'<strong
-                            style="color: orange">une chaîne de commit</strong> pointant chacun sur son parent!</p>
+                    <p class="semantic-sample">Pour Git, une <strong style="color: orange">branche</strong> n'est
+                        qu'<strong style="color: orange">une chaîne de commit</strong> pointant chacun sur son parent!
+                    </p>
                     <pre><code class="bash">git branch ma-nouvelle-feature</code>Crée une nouvelle branche appelée <i>ma-nouvelle-feature</i></pre>
                     <p class="semantic-sample">Une branche est représentée dans Git par <strong style="color: orange">un
                             tag pointant vers le dernier commit</strong> de la branch.</p>
@@ -496,7 +591,8 @@ node_modules/
                 <section>
                     <h1>Git checkout</h1>
                     <p class="semantic-sample">Cette commande sert à <strong style="color: orange">naviguer</strong>
-                        (déplacer le HEAD) dans l'arbre d'historique. De cette manière, vous <strong style="color: orange">remplacez
+                        (déplacer le HEAD) dans l'arbre d'historique. De cette manière, vous <strong
+                            style="color: orange">remplacez
                             votre arborescence de fichier</strong> par celle en l'état au moment du commit choisi.</p>
                     <pre><code class="bash">git checkout 6b2488</code></pre>
                     <pre><code class="bash">git checkout master</code></pre>
@@ -529,7 +625,8 @@ node_modules/
                 </section>
                 <section>
                     <h1>Git pull</h1>
-                    <p class="semantic-sample">Cette commande sert à récupérer les commit sur <i style="color:red">origin</i>
+                    <p class="semantic-sample">Cette commande sert à récupérer les commit sur <i
+                            style="color:red">origin</i>
                         pour mettre à jour notre dépôt local</p>
                     <pre><code class="bash">git pull</code>Récupère et merge les commits de la branche serveur correspondant à notre branche locale.</pre>
                     <pre><code class="bash">git pull origin master</code>Récupère et fusionne les commit de la branche master sur origin à notre branche locale.</pre>
@@ -595,7 +692,8 @@ node_modules/
                     <pre><code class="bash">git rebase master</code>Rebase la branche courante sur master</pre>
                     <div>
                         <canvas id="rebase" style="background: white; height: 280px !important;" height="320"></canvas>
-                        <canvas id="rebased" hidden style="background: white; height: 280px !important;" height="320"></canvas>
+                        <canvas id="rebased" hidden style="background: white; height: 280px !important;"
+                            height="320"></canvas>
                         <blockquote>
                             <p>Attention, on réécrit l'historique. Donc les <i style="color:red">SHA-1</i> des commits
                                 changent</p>
@@ -632,7 +730,8 @@ node_modules/
                 </section>
                 <section>
                     <h1>L'intérêt du rebase</h1>
-                    <canvas id="feature-branch-rebase-flow" style="background: white; height: 280px !important;" height="320"></canvas>
+                    <canvas id="feature-branch-rebase-flow" style="background: white; height: 280px !important;"
+                        height="320"></canvas>
                     <script>
                         (function () {
                             var template = getDefautTemplate();
@@ -659,7 +758,8 @@ node_modules/
                 <section>
                     <h1>Les logiciels de dépôt</h1>
                     <p class="semantic-sample">Ils permettent de gérer efficacement un dépôt. <i>Sécuriser</i> certaine
-                        branches, mettre en place des <i>builds automatiques</i>, des <i>workflows</i> particuliers...</p>
+                        branches, mettre en place des <i>builds automatiques</i>, des <i>workflows</i> particuliers...
+                    </p>
                     <div style="display: flex; justify-content: space-around">
                         <img src="images/gitlab-logo.svg" style="width: 300px;padding:15px; background: white;" alt="">
                         <img src="images/TFS-logo.png" style="padding:15px; background: white;" alt="">
@@ -709,9 +809,11 @@ node_modules/
             <section style="font-size: 22px; color:white" data-transition="slide" data-background-transition="zoom">
                 <section>
                     <h1>Exercices</h1>
-                    <p class="semantic-sample"><a href="https://github.com/SalomonBrys/Git-Exercices" target="_blank">Prise
+                    <p class="semantic-sample"><a href="https://github.com/SalomonBrys/Git-Exercices"
+                            target="_blank">Prise
                             en main</a></p>
-                    <p class="semantic-sample"><a href="https://learngitbranching.js.org/" target="_blank">Branching</a></p>
+                    <p class="semantic-sample"><a href="https://learngitbranching.js.org/" target="_blank">Branching</a>
+                    </p>
                 </section>
             </section>
             <!-- Workflow -->
@@ -720,7 +822,8 @@ node_modules/
                 <section>
                     <h1>Workflows</h1>
                     <p class="semantic-sample">Pour une <i>organisation du travail</i> efficace et qualitative!</p>
-                    <p class="semantic-sample">Git est un outil génial à bien utiliser : les workflows sont les <b>processus
+                    <p class="semantic-sample">Git est un outil génial à bien utiliser : les workflows sont les
+                        <b>processus
                             de gestion de code</b> qui permettent une d'en tirer le maximum</p>
                     <ol>
                         <li class="semantic-sample">Workflow centralisé <i>tout sur master</i></li>
@@ -740,7 +843,8 @@ node_modules/
                     <p class="semantic-sample">Flow le plus utilisé à l'heure actuelle chez Klee. <i>Simple, léger,
                             efficace</i>. Pas de garde fou ni de modularité.</p>
 
-                    <canvas id="central-flow" style="background: white; height: 280px !important;" height="320"></canvas>
+                    <canvas id="central-flow" style="background: white; height: 280px !important;"
+                        height="320"></canvas>
                     <script>
                         (function () {
                             var template = getDefautTemplate();
@@ -762,8 +866,8 @@ node_modules/
                         <li class="semantic-sample">Je <i>push</i></li>
                     </ol>
                     <p>
-                        <img src="images/git_centralized_workflow.svg" style="width: 300px;padding:15px; background: white;"
-                            alt="">
+                        <img src="images/git_centralized_workflow.svg"
+                            style="width: 300px;padding:15px; background: white;" alt="">
                     </p>
                 </section>
                 <section>
@@ -776,8 +880,8 @@ node_modules/
                     <p class="semantic-sample">Résolution <i>locale</i> qui peut demander développeurs concernés de
                         se pencher ensemble sur le problème.</p>
                     <p>
-                        <img src="images/git_centralized_workflow_conflit.svg" style="width: 300px;padding:15px; background: white;"
-                            alt="">
+                        <img src="images/git_centralized_workflow_conflit.svg"
+                            style="width: 300px;padding:15px; background: white;" alt="">
                     </p>
                     <p class="semantic-sample">En pratique, le développeur qui fait face au conflit a tendance à le
                         résoudre <b>plus simplement possible et à pusher</b>.
@@ -829,7 +933,8 @@ node_modules/
                     <p class="semantic-sample">Travail supplémentaire à l'<i>intégration d'une feature</i>.</p>
                 </section>
                 <section>
-                    <canvas id="feature-branch-flow" style="background: white; height: 280px !important;" height="320"></canvas>
+                    <canvas id="feature-branch-flow" style="background: white; height: 280px !important;"
+                        height="320"></canvas>
                     <script>
                         (function () {
                             var template = getDefautTemplate();
@@ -854,7 +959,8 @@ node_modules/
                         <li class="semantic-sample">Je crée une branche <i>Mantis_845</i> à partir de <i>master</i>
                             liés à une issue/WI</li>
                         <li class="semantic-sample">Je code sur ma branche (<b>commit</b> et <b>push</b> réguliers)</li>
-                        <li class="semantic-sample">Je résous les conflits avec <i>master</i> (<b>merge</b> ou <b>rebase</b>)</li>
+                        <li class="semantic-sample">Je résous les conflits avec <i>master</i> (<b>merge</b> ou
+                            <b>rebase</b>)</li>
                         <li class="semantic-sample">Je crée la <b>pull request</b></li>
                         <li class="semantic-sample">Un <b>relecteur valide</b> ma pull request ou me renvoie à
                             l'étape 2</li>
@@ -869,7 +975,8 @@ node_modules/
                         <i>Mantis_845</i>.
                         Il n'y a pas d'exclusivité à un seul développeur.</p>
                     <p class="semantic-sample">Pour une simplification de l'arbre des commits, <code class="bash">git merge --squash
-                            bugfix</code>. Cela concatène tous les commits de la branche <i>Mantis_845</i> en un seul.</p>
+                            bugfix</code>. Cela concatène tous les commits de la branche <i>Mantis_845</i> en un seul.
+                    </p>
                     <p class="semantic-sample">Les merges des fonctionnalités dans la branche de développement peuvent
                         être fait <b>localement</b> (sur le poste de travail du lead tech par exemple). Ils peuvent
                         être fait dans les <b>forges logicielles</b> (par pull request).</p>
@@ -883,7 +990,8 @@ node_modules/
                 <section>
                     <h1>Avantages</h1>
                     <ol>
-                        <li class="semantic-sample">Assez simple et intuitif : une fonctionnalité == une branche</b></li>
+                        <li class="semantic-sample">Assez simple et intuitif : une fonctionnalité == une branche</b>
+                        </li>
                         <li class="semantic-sample">Livraison des fonctionnalités et correctifs indépendament les unes
                             des autres (dans les limites du métier).</li>
                         <li class="semantic-sample">Pousse à la relecture de code</li>
@@ -1054,7 +1162,8 @@ node_modules/
                 </section>
                 <section>
                     <h1>Quand l'utiliser ?</h1>
-                    <li class="semantic-sample">Grosse équipe sur plusieurs sites, fuseaux horaires, entreprises, etc.</li>
+                    <li class="semantic-sample">Grosse équipe sur plusieurs sites, fuseaux horaires, entreprises, etc.
+                    </li>
                     <li class="semantic-sample">Projet à multiples parties prenantes</li>
                 </section>
             </section>
