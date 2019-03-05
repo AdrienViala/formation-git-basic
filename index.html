@@ -171,11 +171,11 @@
                     <ul class="semantic-sample">
                         <li>description : pour GitWeb (ancêtre des web interface)
                         </li>
-                        <li>branches/ : old git (before 2009) 
+                        <li>branches/ : old git (before 2009)
                         </li>
                         <li>config : fichier de configuration au niveau du projet
                         </li>
-                        <li>info : .gitignore au niveau global 
+                        <li>info : .gitignore au niveau global
                         </li>
                         <li>hooks : pour les hooks (scripts appelés par les commandes Git)
                         </li>
@@ -189,34 +189,80 @@
                     </ul>
                 </section>
 
+
+            </section>
+
+
+            <section>
+                <section>
+                    <h2>Git hooks</h2>
+                    <img src="./images/giphy/hook.gif" style="height:500px;" />
+                </section>
                 <section>
                     <h2>Git hooks</h2>
                     <p class="semantic-sample" style="text-align: left;">
-                        <p>Les hooks sont built-in dans Git.</p>
-                        <p>A des moments pré-déterminés, Git exécute des scripts</p>
+                        <p>Built-in, Git exécute des scripts pre & post command</p>
                         <p>Ces scripts sont modifiables à volonté.</p>
-                        <p>Le but premier est de fluidifier le processus de développement : build, déploiement, vérification, etc.</p>
-                        <p>Tous les outils existent déjà pour exploiter au maximum les Git Hooks : </p>
+                        <p>Quelconque language : shell, python, ruby, perl...</p>
+                        <ul>
+                            <li>build </li>
+                            <li>déploiement </li>
+                            <li>vérification </li>
+                        </ul>
+                </section>
+
+                <section>
+                    <h2>Git client-side hooks</h2>
+                    <img src="./images/client_side_hooks.PNG" style="height:550px;" />
+                </section>
+
+                <section>
+                    <h2>Git client-side hooks</h2>
+                    <p class="semantic-sample" style="text-align: left;">
+                        <p>Mais les hooks peuvent faire beaucoup plus : </p>
+                        <ul class="semantic-sample">
+                            <li>Faire passe un <b>linter</b> sur le code commité</li>
+                            <li>Forcer la présence d'un ticket Jira, TFS ou autre dans le commit</li>
+                            <li>Vérifier que le message de commit décrit quelque chose (et pas juste "bug fix")</li>
+                            <li>Lancer la suite de tests automatiques</b></li>
+                            <li>Prendre en photo le commiter avec lolcommits :)</li>
+                        </ul>
                     </p>
-                    <ul class="semantic-sample">
-                        <li>description : pour GitWeb (ancêtre des web interface)
-                        </li>
-                        <li>branches/ : old git (before 2009) 
-                        </li>
-                        <li>config : fichier de configuration au niveau du projet
-                        </li>
-                        <li>info : .gitignore au niveau global 
-                        </li>
-                        <li>hooks : pour les hooks (scripts appelés par les commandes Git)
-                        </li>
-                        <li>HEAD : pointeur vers la branche actuellement checked out
-                        </li>
-                        <li>index : la fameuse staging area !
-                        </li>
-                        <li>objects/ : l'ensemble des snapshots (les versions)
-                        </li>
-                        <li>refs/ : les pointeurs vers les commits actuels : contient heads, remote et tags.
-                    </ul>
+                    <img src="./images/lolcommits.jpeg" style="height:200px;" />
+                </section>
+
+                <section>
+                    <h2>Git hooks</h2>
+                    <p class="semantic-sample" style="text-align: left;">
+                        <p>Tous les outils existent déjà pour exploiter au maximum les Git Hooks : </p>
+                        <p>Google est notre ami.</p>
+                        <a href="https://github.com/aitemr/awesome-git-hooks" target="_blank">Un repo de liens, de
+                            documentation et d'exemples pour démarrer</a>
+                    </p>
+                </section>
+
+                <section>
+                    <h2>Git server-side hooks</h2>
+                    <p class="semantic-sample" style="text-align: left;">
+                        <p>Les hooks peuvent être utilisés côté serveur : pre-receive, post-receive, and update</p>
+                        <p>Ils peuvent <b>rejeter les push</b> inéadéquats.</p>
+                        <p>Ils sont différents des outils de Continuous Integration & Continuous
+                            Deployement offert par
+                            les plateformes construites autour de Git, comme Gitlab, Bitbucket, Github...</p>
+                    </p>
+                </section>
+
+                <section>
+                    <h2> != Webhooks</h2>
+                    <p class="semantic-sample" style="text-align: left;">
+                        <p>Fournis par les plateformes</p>
+                        <p>Callback HTTP construit par l'administrateur</p>
+                        <ul class="semantic-sample">
+                            <li>Notification Slack quand un build échoue, quand un build est déployé</li>
+                            <li>Mail envoyé à chaque étape du cycle de vie d'un ticket (classique)</li>
+                            <li>Labéliser les merge requests</li>
+                        </ul>
+                    </p>
                 </section>
             </section>
 
