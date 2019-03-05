@@ -177,18 +177,122 @@
                         </li>
                         <li>info : .gitignore au niveau global
                         </li>
+                        <li><b>objects/</b> : l'ensemble des snapshots (les versions)
+                        </li>
+                        <li><b>refs/</b> : les pointeurs vers les commits actuels : contient <b>heads</b>, <b>remote</b>
+                            et <b>tags</b>.</li>
+                        <li><b>HEAD</b> : pointeur vers la branche actuellement checked out
+                        </li>
+                        <li><b>index</b> : la fameuse staging area !
+                        </li>
                         <li>hooks : pour les hooks (scripts appelés par les commandes Git)
                         </li>
-                        <li>HEAD : pointeur vers la branche actuellement checked out
-                        </li>
-                        <li>index : la fameuse staging area !
-                        </li>
-                        <li>objects/ : l'ensemble des snapshots (les versions)
-                        </li>
-                        <li>refs/ : les pointeurs vers les commits actuels : contient heads, remote et tags.
                     </ul>
                 </section>
 
+                <section>
+                    <h2>objects/</h2>
+                    <p class="semantic-sample" style="text-align: center;">
+                        <p>Il n'y a que 4 objets pour faire fonctionner Git</p>
+                        <ul class="semantic-sample">
+                            <li><b>Object</b> = zlib(Header + Content)
+                            </li>
+                            <li><b>Header</b> = ObjectType + \\u0020 + ContentBytesSize + \\u0000
+                            </li>
+                            <li><b>SHA1</b></b> = SHA1(Header + Content)
+                            </li>
+                        </ul>
+                    </p>
+                    <ul class="semantic-sample">
+                        <li><b>blob</b> : contient la donnée compressée avec zlib
+                        </li>
+                        <li><b>tree</b> : contient 1 sub-tree et/ou des blobs
+                        </li>
+                        <li><b>commit</b> : contient des metadata, un tree et les commits précédents
+                        </li>
+                        <li><b>tags</b> : contient des metadata et un commit
+                        </li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>objects/</h2>
+                    <img src="./images/data-model-3.png" style="height:520px;" />
+                </section>
+
+                <section>
+                    <h2>refs/</h2>
+                    <img src="./images/refs_content.PNG" style="height:150px;" />
+                    <h2>refs/heads/</h2>
+                    <img src="./images/refs_master_content.PNG" style="height:150px;" />
+                </section>
+
+                <section>
+                    <h2>refs/heads/master</h2>
+                    <img src="./images/refs_heads_master_content.PNG" style="height:400px;" />
+                </section>
+
+                <section>
+                    <h2>Refs & Tags</h2>
+                    <p class="semantic-sample" style="text-align: left;">
+                        <p>Un <b>tag léger</b> est simplement une référence</p>
+                        <pre><code class="bash">git update-ref refs/tags/v2.0 sha1</code>Crée un tag léger, i.e. juste une référence</pre>
+                        <pre><code class="bash">git tag v2.0</code>Fait la même chose (attention pas de handle)</pre>
+                        <p>Un <b>tag annoté</b> est un objet Git qui pointe vers un SHA1 et qui est référencé dans
+                            /refs/tags/</p>
+                        <pre><code class="bash">git tag -a v2.0 sha1 -m 'formation-git-basic finie'</code>Seule méthode de créer le tag annoté</pre>
+                    </p>
+                </section>
+
+                <section>
+                    <h2>Refs & Tags</h2>
+                    <p class="semantic-sample" style="text-align: left;">
+                        <p>N'importe quel objet Git qui a un SHA1 peut être taggé</p>
+                        <p>Faites des tags annotés, pas des références</p>
+                        <p>Les tags ne sont pas automatiquement pushés : </p>
+                        <pre><code class="bash">git push origin v2.0</code>Aussi possible :  --tags pour tous le tags</pre>
+                        <pre><code class="bash">git push origin v2.0</code>Aussi possible :  --tags pour tous le tags</pre>
+                        <pre><code class="bash">git tag -d v2.0</code>Efface le tag local</pre>
+                        <pre><code class="bash">git push origin --delete v2.0</code>Efface le tag sur le remote</pre>
+
+                    </p>
+                </section>
+
+                <section>
+                    <h2>Refs & Branches</h2>
+                    <p class="semantic-sample" style="text-align: left;">
+                        <p>Une branche est une référence ! </p>
+                        <pre><code class="bash">git update-ref refs/heads/test_formation SHA1_Commit</code>On va créer une branche juste avec cette commande</pre>
+                        <pre><code class="bash">echo SHA1_Commit > .git/refs/heads/test_formation</code>Fait la même chose (mais c'est mieux de ne pas toucher directement le fichier)</pre>
+                        <pre><code class="bash">git log --pretty=oneline test_formation</code>on voit la branche nouvellement créée</pre>
+                    </p>
+                </section>
+
+                <section>
+                    <h2>HEAD</h2>
+                    <p class="semantic-sample" style="text-align: left;">
+                        <p>C'est un pointeur vers un pointeur</p>
+                        <p><code class="txt">ref: refs/heads/git++</code></p>
+                    </p>
+                </section>
+
+                <section>
+                    <h2>Pack files</h2>
+                    <h4>performance & compression</h4>
+                    <p class=" semantic-sample" style="text-align: left;">
+                        <p>De temps en temps, Git <b>packs</b> les git objects</p>
+                        <ul class="semantic-sample">
+                            <li>.git/objects/pack/pack-SHA1.pack
+                            </li>
+                            <li>.git/objects/pack/pack-SHA1.idx
+                            </li>
+                        </ul>
+                        <p>Dans l'index, Git se souvient de la structure</p>
+                        <p>Dans le pack, Git stocke des blobs et des <b>deltas</b></p>
+                        <pre><code class="bash">git gc</code>Exécute le Garbage Collector</pre>
+                        <pre><code class="bash">git verify-pack -v .git/objects/pack/pack-Sha1.idx</code>Affiche la structure du pack</pre>
+                    </p>
+                </section>
 
             </section>
 
